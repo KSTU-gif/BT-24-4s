@@ -17,5 +17,8 @@ print(sum(x,n))
 2)
 def sum_digits(n):
     if num < 10:
-	return 10
+	return num
+    return num % 10 + sum_digits(num//10)
+num=int(input("Введите число: "))
+print(sum_digits(num))
 
