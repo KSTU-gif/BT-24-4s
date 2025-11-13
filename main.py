@@ -1,6 +1,5 @@
 def nested_dict(n):
-	res = ""
-	while n>0:
-		res.append['level': n, 'next': {'level': n-1, 'next':}]
-	return res
-print(nested_dict(n)
+	if == 0:
+		return none
+	return {'level' : n, 'next' : nested_dict(n-1)}
+print(nested_dict(3)
