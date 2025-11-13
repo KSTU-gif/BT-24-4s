@@ -1,3 +1,5 @@
+# Вариант 5
+
 def char_replace(counter = 0, str, old, new):
 	str_length = len(counter)
 	old_length = len(old)

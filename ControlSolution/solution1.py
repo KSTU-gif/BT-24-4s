@@ -1,3 +1,5 @@
+# Вариант 5
+
 def solve(k = 1, n):
 	if k >= n:
 		return 0
