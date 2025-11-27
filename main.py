@@ -1,1 +1,1 @@
-print("hello world")
+ou shsych ne nado 
