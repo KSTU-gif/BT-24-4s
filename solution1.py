@@ -9,5 +9,5 @@ dif  k = input()
      factorialk = k * fact
 		
      res = 1 + (sin(k * x)/factorialk)
-
-print(res)
+ 
+print(res)ere
