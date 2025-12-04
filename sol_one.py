@@ -1,7 +1,7 @@
 import math
 
 def factorial(num):
-	if num <= 0:
+	if num <= 0:rtr
 		return 1
 	return num * factorial(num - 1)
 
