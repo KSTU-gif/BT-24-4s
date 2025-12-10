@@ -1,66 +1,61 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QMessageBox
-
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton
 import sys
 
-from random import randint
+class CounterModel:
+    def __init__(self):
+        self.value = 0
+        self.subscribers = []
 
-class AppState(object):
-    _instance = None
+    def subscribe(self, callback):
+        self.subscribers.append(callback)
 
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance.counter = 0
-        return cls._instance
-  
-    def inc(self):
-        self.counter += 1
+    def notify(self):
+        for callback in self.subscribers:
+            callback(self.value)
 
-    def get(self):
-        return self.counter
+    def increment(self):
+        self.value += 1
+        self.notify()
 
-class AnotherWindow(QWidget):
-    """
-    This "window" is a QWidget. If it has no parent, it
-    will appear as a free-floating window as we want.
-    """
+
+class Window(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.setWindowTitle("Observer task")
+
         layout = QVBoxLayout()
 
-        s = AppState()
+        self.label1 = QLabel("Label 1: 0")
+        self.label2 = QLabel("Label 2: 0")
 
-        self.label = QLabel(f"Counter: {s.get()}")
-        layout.addWidget(self.label)
-        self.setLayout(layout)
+        self.label1.setStyleSheet("""
 
+        """)
 
-class MainWindow(QMainWindow):
+        self.button = QPushButton("Увелечить счетчик")
 
-    def __init__(self):
-        super().__init__()
-        self.button = QPushButton('Нажми меня', self)
-        self.button.clicked.connect(self.show_new_window)
-
-        # Создаем вертикальный layout и добавляем кнопку
-        layout = QVBoxLayout()
+        layout.addWidget(self.label1)
+        layout.addWidget(self.label2)
         layout.addWidget(self.button)
 
-        # Устанавливаем layout для основного окна
         self.setLayout(layout)
 
-        # Настройки окна
-        self.setWindowTitle('PyQt5 Пример')
-        self.setGeometry(300, 300, 300, 200)
-    
+        self.model = CounterModel()
 
-    def show_new_window(self):
-        s = AppState()
-        s.inc()
+        self.model.subscribe(self.update_label1)
+        self.model.subscribe(self.update_label2)
 
-app = QApplication(sys.argv)
-w = MainWindow()
-w.show()
-v = AnotherWindow()
-v.show()
-app.exec()
+        self.button.clicked.connect(self.model.increment)
+
+    def update_label1(self, value):
+        self.label1.setText(f"Label 1: {value}")
+
+    def update_label2(self, value):
+        self.label2.setText(f"Label 2: {value}")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = Window()
+    window.show()
+    sys.exit(app.exec_())
