@@ -21,7 +21,7 @@ class TimerApp(QWidget):
 
         self.mode_box = QComboBox()
         self.mode_box.addItems([
-            "Секундмер",
+            "Секундомер",
             "Отсчёт вниз"
         ])
 
