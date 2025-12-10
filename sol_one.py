@@ -1,3 +1,5 @@
+#7 variant
+
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton
 import sys
 
